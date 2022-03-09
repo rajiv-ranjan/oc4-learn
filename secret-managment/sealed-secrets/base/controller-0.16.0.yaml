@@ -30,7 +30,7 @@ spec:
         command:
         - controller
         env: []
-        image: quay.io/bitnami/sealed-secrets-controller:v0.17.3
+        image: quay.io/bitnami/sealed-secrets-controller:v0.16.0
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -91,7 +91,7 @@ spec:
     subresources:
       status: {}
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
   annotations: {}
@@ -133,7 +133,7 @@ spec:
     name: sealed-secrets-controller
   type: ClusterIP
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
   annotations: {}
@@ -145,14 +145,6 @@ rules:
 - apiGroups:
   - ""
   resourceNames:
-  - sealed-secrets-controller
-  resources:
-  - services
-  verbs:
-  - get
-- apiGroups:
-  - ""
-  resourceNames:
   - 'http:sealed-secrets-controller:'
   - sealed-secrets-controller
   resources:
@@ -161,7 +153,7 @@ rules:
   - create
   - get
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
   annotations: {}
@@ -178,7 +170,7 @@ subjects:
   name: sealed-secrets-controller
   namespace: kube-system
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
   annotations: {}
@@ -195,7 +187,7 @@ rules:
   - create
   - list
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   annotations: {}
@@ -211,7 +203,7 @@ subjects:
   name: sealed-secrets-controller
   namespace: kube-system
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   annotations: {}
@@ -239,7 +231,6 @@ rules:
   - secrets
   verbs:
   - get
-  - list
   - create
   - update
   - delete
